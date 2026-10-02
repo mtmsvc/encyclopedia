@@ -17,5 +17,6 @@ It basically controls the whole project: the dependencies are declared in `pypro
 - `uv tree` - show the dependency tree
 - `uv run <command>` - run any command inside the project's environment, e.g. `uv run python file.py` or `uv run pytest`; syncs `.venv` first, no activation needed
 - `uv run <script-name>` - run a command defined in `pyproject.toml` under `[project.scripts]`, which calls a specific function (`"package.file:function"`)
-- `uv run -m <package>.<file>` - run a file inside the package as a module (same as `uv run python -m ...`), so imports inside the package work
+- `uv run -m <package>.<file>` - run a file inside the package as a module (same as `uv run python -m ...`), so relative imports inside the package work
 - `uv sync` - create or update `.venv` so it matches `uv.lock` exactly
+- `uv cache clean` - remove all cached packages from the local cache (uv keeps the installed packages in the cache to avoid reinstalling them)
