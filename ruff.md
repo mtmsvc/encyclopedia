@@ -16,6 +16,7 @@ It can output the locations of the issues found, and the code with details of ea
 
 To fix the fixable issues, run check with the `--fix` flag: `ruff check --fix <path_to_directory_or_file>`.
 To see what fixes it is going to apply without applying them, add the `--diff` flag: `ruff check --fix --diff <path_to_directory_or_file>`.
+
 To format the code: `ruff format <path_to_directory_or_file>`.
 To only check the formatting without changing files (used in CI): `ruff format --check <path_to_directory_or_file>`.
 
