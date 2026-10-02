@@ -19,7 +19,7 @@ To see what fixes it is going to apply without applying them, add the `--diff` f
 To format the code: `ruff format <path_to_directory_or_file>`.
 To only check the formatting without changing files (used in CI): `ruff format --check <path_to_directory_or_file>`.
 
-The best practice is to run the linter (with `--fix`) first, and then the formatter, because lint fixes can leave code that needs reformatting.
+The best practice is to run the linter first, fix the issues, and then run the formatter, because lint fixes can leave code that needs reformatting.
 
 ## Set up **ruff** for a project
 We can configure **ruff** for the whole project in `pyproject.toml`. In particular, we can set which violations to look for, etc. To do this, we add a `[tool.ruff]` section to the `pyproject.toml` file. For example:
