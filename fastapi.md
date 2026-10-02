@@ -1,6 +1,16 @@
 # FastAPI
 A modern, fast (high-performance) web framework for building APIs with Python.
 
+## Under the hood
+- The **event loop** - the app is basically just one or several threads, that accept some task (requests). Several async requests can share one thread, and if we block it, everything freezes.
+- **uvicorn** is an **ASGI** server. ASGI is the standard interface between async Python servers and frameworks. It runs the event loop and hands each request to your app.
+- **FastAPI** is built on **Starlette** (routing, requests, responses) plus **Pydantic** (validation).
+
+When going deeper, watch:
+- https://www.youtube.com/watch?v=rvFsGRvj9jo
+- https://www.youtube.com/watch?v=nYAMtzAbNN8
+- https://www.youtube.com/watch?v=kmJz8w5ij8Y
+- 
 ## Install and run
 To install FastAPI, run `uv add "fastapi[standard]"`. Plain `fastapi` is only the framework: it has no `fastapi` CLI and no server, so it can't run by itself. The `[standard]` extra adds both the CLI and `uvicorn`, the server that actually runs the app.
 
