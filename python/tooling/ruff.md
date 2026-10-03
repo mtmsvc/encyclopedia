@@ -6,11 +6,11 @@ In a project, the best practice is to add it as a dev dependency: `uv add --dev 
 It can also be installed globally as a tool: `uv tool install ruff` (handy outside projects, but the version isn't pinned per project).
 
 ## Run in cmd, and view the code in cmd during working
-In a project, all commands are run with `uv run` in front (e.g. `uv run ruff check .`). Without it, they only work if ruff is installed as a global tool.
+In a project, all commands are run with `uv run` in front (e.g. `uv run ruff check .`). Without it, they only work if **ruff** is installed as a global tool.
 
 To check a specific file: `ruff check <path_to_file>`.
 To check the whole directory: `ruff check <path_to_directory>`.
-If we want **ruff** to check for issues in real time and show us the results in the terminal, we can use the `--watch` flag: `ruff check --watch <path_to_directory_or_file>`.
+If we want ruff to check for issues in real time and show us the results in the terminal, we can use the `--watch` flag: `ruff check --watch <path_to_directory_or_file>`.
 
 It can output the locations of the issues found, and the code with details of each issue. We can check the issue details in the **ruff documentation**, using the issue code.
 
@@ -22,8 +22,8 @@ To only check the formatting without changing files (used in CI): `ruff format -
 
 The best practice is to run the linter first, fix the issues, and then run the formatter, because lint fixes can leave code that needs reformatting.
 
-## Set up **ruff** for a project
-We can configure **ruff** for the whole project in `pyproject.toml`. In particular, we can set which violations to look for, etc. To do this, we add a `[tool.ruff]` section to the `pyproject.toml` file. For example:
+## Set up ruff for a project
+We can configure ruff for the whole project in `pyproject.toml`. In particular, we can set which violations to look for, etc. To do this, we add a `[tool.ruff]` section to the `pyproject.toml` file. For example:
 
 ```toml
 [tool.ruff]

@@ -29,14 +29,31 @@ uv run fastapi dev src/<project_name>/main.py   # check /health and /docs
 ```
 
 ## 3. Lint and format - [ruff](tooling/ruff.md)
+`pyproject.toml`:
+```toml
+[tool.ruff]
+lint.extend-select = ["I"]   # import sorting, off by default
+```
 ```bash
 uv add --dev ruff
 uv run ruff check --fix .
 uv run ruff format .
 ```
 
-## 4. Type checking - mypy
-TODO (S2)
+## 4. Type checking - [mypy](tooling/mypy.md)
+```bash
+uv add --dev mypy
+```
+`pyproject.toml`:
+```toml
+[tool.mypy]
+strict = true
+```
+Optionally, add `files = ["src", "tests"]` under `strict = true`; then plain
+`uv run mypy` checks only those directories. Without `files`, pass the path:
+```bash
+uv run mypy .
+```
 
 ## 5. Tests - pytest
 TODO (S2)
