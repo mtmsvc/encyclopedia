@@ -55,8 +55,35 @@ Optionally, add `files = ["src", "tests"]` under `strict = true`; then plain
 uv run mypy .
 ```
 
-## 5. Tests - pytest
-TODO (S2)
+## 5. Tests - [pytest](tooling/pytest.md)
+```bash
+uv add --dev pytest httpx2      # httpx2: needed by FastAPI's TestClient
+```
+```
+tests/
+├── conftest.py      # shared fixtures, loaded automatically
+├── test_main.py     # API tests (TestClient)
+└── test_utils.py    # unit tests
+```
+`tests/conftest.py`:
+```python
+import pytest
+from fastapi.testclient import TestClient
+
+from <project_name>.main import app
+
+
+@pytest.fixture
+def client() -> TestClient:
+    return TestClient(app)
+```
+All checks, from the project root, before every commit:
+```bash
+uv run ruff check --fix .
+uv run ruff format .
+uv run mypy src tests
+uv run pytest
+```
 
 ## 6. GitHub + CI
 Push (create an empty repo on GitHub first, no README/.gitignore/license):
