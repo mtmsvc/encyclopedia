@@ -18,7 +18,7 @@ To run the app:
 - `uv run fastapi dev {path_to_app}` - development mode: auto-reloads on every file save, listens only on `127.0.0.1` (only my machine can reach it).
 - `uv run fastapi run {path_to_app}` - production mode: no reload, listens on `0.0.0.0` (reachable from other machines, needed in Docker).
 
-I prefer to put the server start in a main block (`if __name__ == "__main__":`), where I start the server with `uvicorn`:
+On servers I run the server with `uvicorn` command, but on local machines, I prefer to put the server start in a main block (`if __name__ == "__main__":`), where I start the server with `uvicorn`:
 
 ```python
 import uvicorn
