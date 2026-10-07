@@ -307,6 +307,7 @@ After editing the Caddyfile: `docker compose restart caddy`.
 services:
   app:
     image: ghcr.io/<owner>/blasto:${IMAGE_TAG}
+    env_file: app.env
     restart: unless-stopped
 
   caddy:
@@ -328,8 +329,25 @@ volumes:
 IMAGE_TAG=manual
 ```
 
+`app.env` (in the same folder; the app's own settings, e.g. `LOG_LEVEL`, later passwords):
+```
+LOG_LEVEL=INFO
+```
+```bash
+chmod 600 app.env      # only our user can read it
+```
+
+The two files have different jobs:
+- **`.env`** is read by Compose itself, to fill the blanks in `compose.yml`. Its values are **not** passed into the containers.
+- **`app.env`** is passed **into the app container** as environment variables (`env_file: app.env`). This is what the app reads.
+
+Keeping them separate also avoids a trap: the deploy job rewrites `.env` on every deploy (section 11), so any app setting stored in `.env` would be wiped.
+
+`app.env` has no leading dot, so a plain `ls` shows it. That doesn't matter: a dot only hides a file from `ls`, it doesn't protect it. What protects it is that it exists only on the server, and `chmod 600`.
+
 What each part does:
 - **`app` has no `ports:`** - it is reachable only from other containers (the firewall trap, section 5).
+- **`env_file: app.env`** - passes the variables in `app.env` into the app container.
 - **`caddy` publishes 80 and 443** - the only doors to the outside.
 - **`restart: unless-stopped`** - containers come back after a crash or a server reboot, unless we stopped them on purpose.
 - **`./Caddyfile:/etc/caddy/Caddyfile`** - a *bind mount*. A container can't see the server's files, but Caddy needs our `Caddyfile`. This line takes `Caddyfile` from this folder on the server and makes it appear inside the container at `/etc/caddy/Caddyfile`, where Caddy looks for its config. The container does not get its own copy; it reads the file that sits on the server. So when we change the `Caddyfile` on the server, we only need to restart Caddy (`docker compose restart caddy`) for it to read the new version. We don't need to build or download a new image.
@@ -500,7 +518,7 @@ curl -I https://<domain>/health
 4. Install Docker from Docker's repo; add the user to the `docker` group.
 5. Open 80 and 443 in the provider's firewall (or `ufw` if there is no outside firewall).
 6. Push the image to a registry; make it public, or log the server in with a read-only token.
-7. On the server: folder with `compose.yml` (app without ports, proxy with 80/443, volume for certificates), `Caddyfile` (domain + `www` redirect), `.env` with the tag.
+7. On the server: folder with `compose.yml` (app without ports, proxy with 80/443, volume for certificates), `Caddyfile` (domain + `www` redirect), `.env` with the tag, `app.env` with the app's settings (`chmod 600`).
 8. `docker compose up -d`; check `https://<domain>` from a phone.
 9. CD: separate deploy key, secrets (host, user, key, known_hosts), registry permission, deploy job tagged by commit SHA.
 10. Push a visible change; confirm it appears without touching the server.

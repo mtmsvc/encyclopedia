@@ -48,7 +48,9 @@ volumes:
 
 Compose connects all the containers in the file to their own private network. On that network, each container can reach the others by their service name: here, `app` can connect to the database at `db`. A container that only other containers talk to doesn't need `ports` at all.
 
-Values in the file can come from a `.env` file in the same folder: `image: <app-image>:${TAG}` takes `TAG` from a line like `TAG=1.0` in `.env`.
+Two kinds of environment files, both next to `compose.yml`:
+- **`.env`** - Compose finds it automatically by its name and uses it to fill blanks in `compose.yml`: `image: <app-image>:${TAG}` takes `TAG` from a line like `TAG=1.0`. Its values are **not** passed into the containers.
+- **Any other file, e.g. `app.env`** - passed **into** a container only if that service names it with `env_file: app.env`. The application reads these values.
 
 ## Commands
 - `docker pull <image>` - Pull an image from a registry.
@@ -182,6 +184,7 @@ On the server, `blasto` runs behind Caddy, a web server that handles HTTPS and f
 services:
   app:
     image: ghcr.io/<owner>/blasto:${IMAGE_TAG}
+    env_file: app.env
     restart: unless-stopped
 
   caddy:
@@ -197,4 +200,4 @@ services:
 volumes:
   caddy_data:
 ```
-Only Caddy has `ports`; it reaches the app at `app:8000` over the Compose network. The Caddyfile is a bind mount, so we edit it on the server. The certificates are kept in the named volume `caddy_data`, so they survive restarts.
+`IMAGE_TAG` comes from `.env`, which the deploy job rewrites on every deploy. The app's own settings (e.g. `LOG_LEVEL`) are in `app.env`, passed into the app by `env_file`. Only Caddy has `ports`; it reaches the app at `app:8000` over the Compose network. The Caddyfile is a bind mount, so we edit it on the server. The certificates are kept in the named volume `caddy_data`, so they survive restarts.
