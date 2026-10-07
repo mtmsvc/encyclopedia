@@ -59,13 +59,14 @@ Values in the file can come from a `.env` file in the same folder: `image: <app-
 - `docker container prune` - Remove all stopped containers.
 - `docker image rm <image>` - Remove an image.
 - `docker exec -it <container> <command>` - Run a command in a running container. For example, `docker exec -it <container> /bin/sh` opens a shell in the container.
+- `docker logs <container>` - Show a container's logs (everything it wrote to standard output). Add `-f` ("follow") to keep showing new lines as they come, until Ctrl+C.
 - `docker build -t <image> <path>` - Build an image from the `Dockerfile` in the specified path.
 - `docker login <registry>` - Log in to a registry, e.g. `docker login ghcr.io`.
 - `docker push <image>` - Upload an image to a registry. The image name must start with the registry, e.g. `ghcr.io/<owner>/<image>:<tag>`.
 - `docker compose up -d` - Create or update all services in `compose.yml` and start them in the background.
 - `docker compose pull` - Download the newest versions of the services' images.
 - `docker compose ps` - List the services' containers.
-- `docker compose logs -f <service>` - Follow a service's logs.
+- `docker compose logs <service>` - Show a service's logs. Add `-f` ("follow") to keep showing new lines as they come, until Ctrl+C.
 - `docker compose restart <service>` - Restart a service, e.g. after changing its config file.
 - `docker compose down` - Stop and remove all services in `compose.yml`. Named volumes are kept.
 
