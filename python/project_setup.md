@@ -167,8 +167,7 @@ Protect `main`: Settings → Branches → rule for `main` →
 Workflow from then on: branch → PR → green `checks` → merge.
 Local checks before pushing: `./scripts/check.sh` (the four commands from section 5).
 
-## 7. Docker
-TODO (S4)
+## 7. Docker [Docker](../infra/docker.md)
+Define the `Dockerfile`, `.dockerignore`, and build the image. More details in the corresponding infra doc.
 
-## 8. Deploy
-TODO (S5)
+## 8. Deploy [Deploy](../infra/deploy-vps.md)

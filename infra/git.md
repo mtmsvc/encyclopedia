@@ -64,6 +64,7 @@ git push -u origin <branch> # first push of the branch
 git switch main             # back to main
 git pull                    # get the merged result
 git branch -d <branch>      # delete the local branch
+git push origin --delete <branch> # delete the remote branch 
 ```
 `git switch <branch>` switches to an existing branch. `git branch` lists branches.
 

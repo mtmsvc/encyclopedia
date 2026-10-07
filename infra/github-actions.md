@@ -17,3 +17,6 @@ You can configure a GitHub Actions workflow to be triggered when an event occurs
 
 ## Continuous integration (CI)
 A software practice that requires frequently committing code to a shared repository. Committing code more often detects errors sooner and reduces the amount of code a developer needs to debug when finding the source of an error.
+
+## Continuous delivery and deployment (CD)
+A software practice that automatically releases code after it has passed CI. With continuous delivery, every change that passes CI is ready to release, but a human decides when. With continuous deployment, every change that passes CI on the main branch is released automatically, so new code reaches users quickly and without manual steps.
